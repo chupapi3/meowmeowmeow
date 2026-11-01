@@ -3096,12 +3096,6 @@ local function fn()
 			Tooltip = "Where your parry sends the ball.",
 		})
 
-		Curves:AddToggle("nocurvespam", {
-			Text = "No Curve While Spamming",
-			Default = true,
-			Tooltip = "Falls back to Camera curve in clashes so it looks normal.",
-		})
-
 		local CurveBinds = tbl4.combat:AddLeftGroupbox("Curve Binds")
 		CurveBinds:AddTitleBell("curvebinds", "Curve Notifications")
 		for _, name in ipairs(tbl3.curveorder) do
@@ -6419,7 +6413,7 @@ end)
 		end
 
 		tbl3.aimlead = function(l,K,p)local E,k=K.Position+Vector3.new(0,p or 0,0),K.AssemblyLinearVelocity;if k and k.Magnitude>1 then p= clamp ((E-l).Magnitude/220,0,0.35);E+=Vector3.new(k.X,0,k.Z)*p;end;return E;end
-		tbl3.parryPayload = function(l)l=if  tbl10 .nocrv and( tbl9 .msactive or  tbl3 .pload()>1)then"Camera"else l;local K=nil;if  flag then local p= currentCamera .ViewportSize;K={p.X/2,p.Y/2};else local p= UserInputService :GetMouseLocation();K={p.X,p.Y};end;local p={};if  tbl3 .inlobby()then if  dead then for E,k in pairs( dead :GetChildren())do E=k:FindFirstChild("HumanoidRootPart");local a= Players :GetPlayerFromCharacter(k);if E and a and(a:GetAttribute("LobbyTraining"))then p[k.Name]= currentCamera :WorldToScreenPoint(E.Position);end;end;end;for E,E in ipairs( CollectionService :GetTagged("LobbyTrainingTarget"))do p[E.Name]= currentCamera :WorldToScreenPoint(E.Position);end;elseif  alive then for E,k in pairs( alive :GetChildren())do E=k:FindFirstChild("HumanoidRootPart");if E then p[k.Name]= currentCamera :WorldToScreenPoint(E.Position);end;end;end;local E= currentCamera .CFrame;local k,a,d=E.Position,E.LookVector, tbl3 .safechar();if l=="Standoff"then local function R(x,y)return x+(y-x)*random();end;local I=Vector3.new(-a.X,0,-a.Z);I=if I.Magnitude>0.001 then I.Unit else Vector3.new(0,0,-1);local C=Vector3.new(E.RightVector.X,0,E.RightVector.Z);C=if C.Magnitude>0.001 then C.Unit else Vector3.new(1,0,0);local U,J,V=random(1,4),0,0;if U==1 then J=R(-10,10);V=R(0,12);elseif U==2 then J=R(-10,10);V=R(25,50);else J=if random()<0.4 then R(55,85)else R(20,45);V=R(20,50);if U==4 then J=-J;end;end;local H,P=I*math.cos(math.rad(J))+C*math.sin(math.rad(J)),math.rad(V);return{0,CFrame.new(k,k+(H*math.cos(P)+Vector3.new(0,math.sin(P),0))*10000),p,K};end;if l=="Camera"then return{0,CFrame.new(k,k+a),p,K};end;if l=="Backwards"then local I=-a*10000;I=Vector3.new(I.X,0,I.Z);return{0,CFrame.new(k,k+I),p,K};end;if l=="Dot"then local I= tbl3 .aimedplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,15)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Straight"then if  flag then local I= tbl3 .aimedplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,0)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;local I= tbl3 .mouseplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,0)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Random"then local I= random ()* n *2;local C=Vector3.new( cos (I),0, sin (I))*10000;return{0,CFrame.new(k,k+C),p,K};end;if l=="Predict"then local I,C= tbl3 .aimedplr()or( tbl3 .closestplr()),d and(d.PrimaryPart or(d:FindFirstChild("HumanoidRootPart")));local U=I and(I.PrimaryPart or(I:FindFirstChild("HumanoidRootPart")));if C and U then return{0,CFrame.new(C.Position, tbl3 .aimlead(C.Position,U,12)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Up"then return{0,CFrame.new(k,k+Vector3.new(a.X,10000,a.Z)),p,K};end;if l=="Right"then d=E.RightVector*10000;return{0,CFrame.new(k,k+Vector3.new(d.X,0,d.Z)),p,K};end;if l=="Left"then d=E.RightVector*-10000;return{0,CFrame.new(k,k+Vector3.new(d.X,0,d.Z)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end
+		tbl3.parryPayload = function(l)local K=nil;if  flag then local p= currentCamera .ViewportSize;K={p.X/2,p.Y/2};else local p= UserInputService :GetMouseLocation();K={p.X,p.Y};end;local p={};if  tbl3 .inlobby()then if  dead then for E,k in pairs( dead :GetChildren())do E=k:FindFirstChild("HumanoidRootPart");local a= Players :GetPlayerFromCharacter(k);if E and a and(a:GetAttribute("LobbyTraining"))then p[k.Name]= currentCamera :WorldToScreenPoint(E.Position);end;end;end;for E,E in ipairs( CollectionService :GetTagged("LobbyTrainingTarget"))do p[E.Name]= currentCamera :WorldToScreenPoint(E.Position);end;elseif  alive then for E,k in pairs( alive :GetChildren())do E=k:FindFirstChild("HumanoidRootPart");if E then p[k.Name]= currentCamera :WorldToScreenPoint(E.Position);end;end;end;local E= currentCamera .CFrame;local k,a,d=E.Position,E.LookVector, tbl3 .safechar();if l=="Standoff"then local function R(x,y)return x+(y-x)*random();end;local I=Vector3.new(-a.X,0,-a.Z);I=if I.Magnitude>0.001 then I.Unit else Vector3.new(0,0,-1);local C=Vector3.new(E.RightVector.X,0,E.RightVector.Z);C=if C.Magnitude>0.001 then C.Unit else Vector3.new(1,0,0);local U,J,V=random(1,4),0,0;if U==1 then J=R(-10,10);V=R(0,12);elseif U==2 then J=R(-10,10);V=R(25,50);else J=if random()<0.4 then R(55,85)else R(20,45);V=R(20,50);if U==4 then J=-J;end;end;local H,P=I*math.cos(math.rad(J))+C*math.sin(math.rad(J)),math.rad(V);return{0,CFrame.new(k,k+(H*math.cos(P)+Vector3.new(0,math.sin(P),0))*10000),p,K};end;if l=="Camera"then return{0,CFrame.new(k,k+a),p,K};end;if l=="Backwards"then local I=-a*10000;I=Vector3.new(I.X,0,I.Z);return{0,CFrame.new(k,k+I),p,K};end;if l=="Dot"then local I= tbl3 .aimedplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,15)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Straight"then if  flag then local I= tbl3 .aimedplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,0)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;local I= tbl3 .mouseplr();if I and d and d.PrimaryPart then return{0,CFrame.new(d.PrimaryPart.Position, tbl3 .aimlead(d.PrimaryPart.Position,I.PrimaryPart,0)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Random"then local I= random ()* n *2;local C=Vector3.new( cos (I),0, sin (I))*10000;return{0,CFrame.new(k,k+C),p,K};end;if l=="Predict"then local I,C= tbl3 .aimedplr()or( tbl3 .closestplr()),d and(d.PrimaryPart or(d:FindFirstChild("HumanoidRootPart")));local U=I and(I.PrimaryPart or(I:FindFirstChild("HumanoidRootPart")));if C and U then return{0,CFrame.new(C.Position, tbl3 .aimlead(C.Position,U,12)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end;if l=="Up"then return{0,CFrame.new(k,k+Vector3.new(a.X,10000,a.Z)),p,K};end;if l=="Right"then d=E.RightVector*10000;return{0,CFrame.new(k,k+Vector3.new(d.X,0,d.Z)),p,K};end;if l=="Left"then d=E.RightVector*-10000;return{0,CFrame.new(k,k+Vector3.new(d.X,0,d.Z)),p,K};end;return{0,CFrame.new(k,k+a),p,K};end
 		tbl3.parryfallback = function()if  tbl8 .ensure then  tbl8 .ensure();end;return false;end
 
 		tbl3.bindt(task.spawn(function()
@@ -7857,7 +7851,6 @@ end)
 		hum = "humanizer",
 		manspam = "manualspam",
 		music = "music",
-		nocrv = "nocurvespam",
 		norender = "norender",
 		pt = "playertrail",
 		ptcol = "playertrailcolour",
@@ -13005,10 +12998,6 @@ end)
 
 			end)
 
-			toggles.nocurvespam:OnChanged(function(nocrv)
-				tbl10.nocrv = nocrv
-			end)
-
 			for _, name in ipairs(tbl3.curveorder) do
 				local bind = options["curvebind_" .. name]
 				if bind then
@@ -16200,10 +16189,6 @@ end)
 					tbl3.notif("Trigger Bot", "Off.", 3)
 				end
 
-			end)
-
-			toggles.nocurvespam:OnChanged(function(nocrv)
-				tbl10.nocrv = nocrv
 			end)
 
 			for _, name in ipairs(tbl3.curveorder) do
